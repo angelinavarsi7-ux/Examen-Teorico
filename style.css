@@ -30,36 +30,42 @@ header p {
     font-size: 1.1rem;
 }
 
-/* Selector de bloques estilizado */
 select {
     padding: 12px 24px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     font-weight: 500;
-    color: #4a5568;
-    background-color: white;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
+    background-color: white;
+    color: #4a5568;
     cursor: pointer;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
-}
-
-select:focus {
     outline: none;
-    border-color: #6c5ce7;
-    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
 }
 
-/* Contenedor con la perspectiva 3D para el giro */
+select:hover, select:focus {
+    border-color: #00b894;
+    box-shadow: 0 4px 12px rgba(0, 184, 148, 0.15);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* --- ESTILOS DE LA FLASHCARD --- */
 #contenedor-flashcard {
-    width: 400px;
-    height: 280px;
-    perspective: 1200px;
-    margin-bottom: 30px;
+    width: 100%;
+    height: 300px;
+    perspective: 1000px;
 }
 
-/* Estructura de la Flashcard */
 .flashcard {
     width: 100%;
     height: 100%;
@@ -69,51 +75,53 @@ select:focus {
     cursor: pointer;
 }
 
-/* Clase que activa el JavaScript para voltear la tarjeta */
 .flashcard.activada {
     transform: rotateY(180deg);
 }
 
-/* Estilos compartidos para ambas caras de la tarjeta */
 .cara {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Oculta el reverso mientras no está girada */
+    backface-visibility: hidden;
+    border-radius: 24px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 30px;
     box-sizing: border-box;
-    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
     text-align: center;
-    font-size: 1.15rem;
+}
+
+.cara-frontal {
+    background: white;
+    color: #2c3e50;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.cara-frontal p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.cara-trasera {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.cara-trasera p {
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.6;
 }
 
-/* Cara Frontal (Pregunta / Definición) */
-.cara-frontal {
-    background: #ffffff;
-    color: #2d3748;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-}
-
-/* Cara Trasera (Respuesta / Concepto) con degradado morado */
-.cara-trasera {
-    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-    color: white;
-    transform: rotateY(180deg); /* Nace volteada */
-    box-shadow: 0 10px 25px -5px rgba(108, 92, 231, 0.3);
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
-/* Botón Siguiente en degradado verde brillante */
+/* --- BOTONES BASE DE LA APP --- */
 button {
     font-family: 'Poppins', sans-serif;
-    padding: 12px 30px;
+    padding: 14px 28px;
     font-size: 1rem;
     font-weight: 600;
     background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);
@@ -130,11 +138,7 @@ button:hover {
     box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
 }
 
-button:active {
-    transform: translateY(1px);
-}
-
-/* --- MENSAJE DE ÉXITO VERDE ANIMADO --- */
+/* --- MENSAJE DE NOTIFICACIÓN VERDE --- */
 .notificacion-verde {
     position: fixed;
     top: 20px;
@@ -145,37 +149,209 @@ button:active {
     font-weight: 600;
     box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
     z-index: 1000;
-    
-    /* Animación: Entra rebotando desde arriba, se queda un momento y sube desvaneciéndose */
-    animation: aparecerYDesaparecer 3.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-@keyframes aparecerYDesaparecer {
-    0% {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    10% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    85% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
+@keyframes slideDown {
+    from { transform: translateY(-100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-/* Ajuste automático para celulares */
-@media (max-width: 450px) {
-    #contenedor-flashcard {
-        width: 90vw;
-        height: 250px;
-    }
-    header h1 {
-        font-size: 1.8rem;
+/* --- VISTAS Y MENÚ SUPERIOR DE CONCEPTOS --- */
+.btn-superior-izq {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 900;
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+    font-size: 0.9rem;
+    padding: 10px 20px;
+}
+
+.vista-oculta {
+    display: none !important;
+}
+
+.vista-activa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-flecha-volver {
+    background: #e2e8f0;
+    color: #4a5568;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    box-shadow: none;
+    margin-bottom: 15px;
+}
+
+.btn-flecha-volver:hover {
+    background: #cbd5e1;
+    color: #1e293b;
+    transform: translateX(-2px);
+}
+
+.menu-temas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    justify-content: center;
+}
+
+.btn-tema {
+    background: white;
+    color: #2c3e50;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+.btn-tema:hover {
+    border-color: #6c5ce7;
+    background: #f8fafc;
+    transform: translateY(-3px);
+}
+
+.bloque-contenido-tema-oculto {
+    display: none;
+}
+
+/* Contenedor del tema que fuerza a sus hijos a centrarse siempre */
+.bloque-contenido-tema-activo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente todo el contenido */
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* --- INTERFAZ DE SUB-BLOQUES TOTALMENTE CENTRADA --- */
+.contenedor-bloques-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 25px auto; /* Centrado automático de márgenes */
+    justify-content: center;   /* Centra los elementos internos de la cuadrícula */
+}
+
+.bloque-btn {
+    border: none;
+    border-radius: 16px;
+    padding: 18px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-align: center;
+    line-height: 1.3;
+}
+
+.bloque-btn small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.bloque-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+    filter: brightness(1.05);
+}
+
+/* Paleta de Colores */
+.color-coral { background: linear-gradient(135deg, #ff7675 0%, #e84393 100%); }
+.color-turquesa { background: linear-gradient(135deg, #00cec9 0%, #0984e3 100%); }
+.color-morado { background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); }
+
+.color-rosa { background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); }
+.color-esmeralda { background: linear-gradient(135deg, #2ecc71 0%, #1abc9c 100%); }
+.color-naranja { background: linear-gradient(135deg, #ff9f43 0%, #ee5253 100%); }
+
+.color-azul { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+.color-menta { background: linear-gradient(135deg, #55efc4 0%, #00b894 100%); }
+.color-amarillo { background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); color: #2c3e50; }
+.color-amarillo small { color: #57606f; }
+
+/* Nuevas combinaciones de colores */
+.color-violeta { background: linear-gradient(135deg, #a55eea 0%, #8854d0 100%); }
+.color-celeste { background: linear-gradient(135deg, #4b7bec 0%, #3867d6 100%); }
+.color-lima { background: linear-gradient(135deg, #26de81 0%, #20bf6b 100%); }
+.color-oro { background: linear-gradient(135deg, #f7b731 0%, #fa8231 100%); }
+.color-petroleo { background: linear-gradient(135deg, #0fbcf9 0%, #05c46b 100%); }
+.color-fucsia { background: linear-gradient(135deg, #ff007f 0%, #cc0066 100%); }
+
+/* Control de detalles */
+.contenedor-detalles {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.detalle-oculto {
+    display: none;
+}
+
+.detalle-activo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+.tarjeta-concepto-visual {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tarjeta-concepto-visual h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.25rem;
+}
+
+.img-concepto {
+    width: 100%;          /* Ocupa todo el ancho disponible de la tarjeta */
+    height: 180px;         /* Mantiene la altura fija que ya tenías */
+    object-fit: contain;  /* 💡 ¡ESTA ES LA MAGIA! Ajusta la imagen completa para que se vea TODO sin recortarse */
+    background-color: #f8fafc; /* Opcional: un fondo gris muy clarito por si la imagen es alargada y quedan bordes */
+    border-radius: 12px;
+    margin-top: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsivo para celulares */
+@media (max-width: 768px) {
+    .btn-superior-izq { position: static; margin-bottom: 20px; }
+    .contenedor-bloques-grid { 
+        grid-template-columns: 1fr; /* Pone los bloques uno abajo del otro en pantallas chicas */
+        margin: 0 auto 25px auto;
     }
 }

@@ -60,6 +60,7 @@ const bancoFlashcards = {
         { definicion: "Cual usuario tiene mayor prioridad, el regulado por una señal de ceda o la de alto?", concepto: "Los que estan regulados por la señal de ceda" },
         { definicion: "En intersecciones con dos accessos controlados por una señal de de alto, quien tiene la prioridad?", concepto: "Los que circulan por los accesos secundarios" },
         { definicion: "quien tiene la prioridad, los que continuan directo por los accesos secundarios o los que giran a la izquierda desde el mismo acceso?", concepto: "Los que continuan directo." },
+        { definicion: "Al adelantar una bicicleta, cual es la distancia recomendada y segura que debe tener usted del ciclista?", concepto: "1.5 metros" },
     
   {
     definicion: "A qué concepto hace referencia la siguiente definición: 'Factores que aumentan la probabilidad de sufrir un siniestro vial, divididos por la OMS en cuatro grupos estratégicos'",
@@ -190,6 +191,7 @@ const bancoFlashcards = {
         { definicion: "Donde no hay demarcacion, cual es la velocidad maxima?", concepto: "60 km/h" },
         { definicion: "En una zona urbana con alta densidad poblacional, cual es el maximo de velocidad?", concepto: "50 km/h" },
         { definicion: "En pasos peatonales, zonas escolares o centros de salud cual es la velocidad maxima?", concepto: "25 km/h" },
+        { definicion: "La señales verticales de prevencion suelen ser rectangulares a excepcion de 2, cuales son esas señales?", concepto: "El ato y el ceda" },
        
     ],
     bloque3: [ //mecanica
@@ -270,7 +272,16 @@ const bancoFlashcards = {
         { definicion: "Tipo de transmisión que exige al conductor cambiar las marchas de forma manual utilizando la palanca y el pedal de embrague:", concepto: "Transmisión manual" },
         { definicion: "Transmisión de variación continua que ofrece una gama de relaciones sin cambios perceptibles, mejorando el consumo de combustible:", concepto: "Transmisión CVT" },
         { definicion: "Sistema de transmisión híbrido que combina características manuales y automáticas, permitiendo elegir entre control manual o autónomo:", concepto: "Transmisión semiautomática o automatizada" },
-        { definicion: "¿Cómo se define la capacidad de ver y ser visto por otros conductores, apoyada por elementos como el parabrisas y limpiaparabrisas?", concepto: "Visibilidad" }
+        { definicion: "¿Cómo se define la capacidad de ver y ser visto por otros conductores, apoyada por elementos como el parabrisas y limpiaparabrisas?", concepto: "Visibilidad" },
+        { definicion: "Como se llama la tecnologia que tienen algunos autos que alertan en la cabina cuando hay otro auto cerca de un punto ciego?", concepto: "Tecnologia ADAS" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa el numero 195?", concepto: "el ancho de la llanta en centimetros" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa el porcentaje 55%?", concepto: "Porcentaje proporcional del flanco al ancho nominal" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa la letra R?", concepto: "Tipo de construccion radial" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa el numero 16?", concepto: "16 pulgadas, es diametro interior de la llanta" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa el numero 87?", concepto: "indice de carga" },
+        { definicion: "Segun la nomenclatura de la llanta, que significa la letra v?", concepto: "indice de velocidad" },
+        { definicion: "Cauntas veces al año se recomienta hacer una alineacion del eje delantero para evitar desgastes irregulares en la llanta?", concepto: "1 vez al año" },
+
     ],
     bloque4: [ 
                { definicion: "Al menos cuantos metros tiene que haber entre su pecho y el volante?", concepto: "20m" },
@@ -383,37 +394,16 @@ bloque7:[
 ]
 }
 
-// Variables para controlar el estado actual
 let tarjetasActuales = [];
 let tarjetaActivaIndex = 0;
 
-// Referencias a elementos del HTML
 const selector = document.getElementById('selector-bloque');
 const flashcard = document.getElementById('flashcard');
 const textoFrontal = document.getElementById('texto-frontal');
 const textoTrasero = document.getElementById('texto-trasero');
 const btnSiguiente = document.getElementById('btn-siguiente');
+const contenedorNotificacion = document.getElementById('contenedor-notificacion');
 
-// Función interna para renderizar la notificación flotante moderna
-function lanzarNotificacionVerde() {
-    const contenedor = document.getElementById('contenedor-notificacion');
-    
-    // Evitamos acumular múltiples letreros en pantalla si el usuario hace clic muy rápido
-    contenedor.innerHTML = ""; 
-    
-    const divMensaje = document.createElement('div');
-    divMensaje.className = 'notificacion-verde';
-    divMensaje.textContent = "🎉 ¡Bloque completado! Mezclando tarjetas de nuevo...";
-    
-    contenedor.appendChild(divMensaje);
-    
-    // Se limpia del documento una vez finalizada la animación de style.css
-    setTimeout(() => {
-        divMensaje.remove();
-    }, 3500);
-}
-
-// 2. Función para mezclar un array de forma aleatoria (Algoritmo Fisher-Yates)
 function mezclarTarjetas(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -422,35 +412,23 @@ function mezclarTarjetas(array) {
     return array;
 }
 
-// 3. Función para mostrar la tarjeta actual
 function mostrarTarjeta() {
-    if (tarjetasActuales.length === 0) return;
-    
-    // Nos aseguramos de que la tarjeta regrese a la cara frontal antes de cambiar el texto
     flashcard.classList.remove('activada');
-    
-    // Esperamos un breve momento para cambiar el texto mientras se voltea de regreso
     setTimeout(() => {
         const tarjeta = tarjetasActuales[tarjetaActivaIndex];
         textoFrontal.textContent = tarjeta.definicion;
         textoTrasero.textContent = tarjeta.concepto;
-    }, 200);
+    }, 150);
 }
 
-// 4. Evento: Al cambiar la selección del bloque
 selector.addEventListener('change', (e) => {
     const bloqueSeleccionado = e.target.value;
-    
     if (bloqueSeleccionado && bancoFlashcards[bloqueSeleccionado]) {
-        // Clonamos el array original para no modificar la base de datos y lo mezclamos
         tarjetasActuales = mezclarTarjetas([...bancoFlashcards[bloqueSeleccionado]]);
         tarjetaActivaIndex = 0;
-        
-        // Mostramos el botón "Siguiente" y la primera tarjeta
         btnSiguiente.style.display = "inline-block";
         mostrarTarjeta();
     } else {
-        // Si elige la opción por defecto vacía
         btnSiguiente.style.display = "none";
         flashcard.classList.remove('activada');
         textoFrontal.textContent = "Selecciona un bloque arriba para empezar a estudiar.";
@@ -458,22 +436,85 @@ selector.addEventListener('change', (e) => {
     }
 });
 
-// 5. Evento: Al hacer clic en la tarjeta (Efecto voltear)
 flashcard.addEventListener('click', () => {
     flashcard.classList.toggle('activada');
 });
 
-// 6. Evento: Al pulsar el botón "Siguiente Tarjeta"
 btnSiguiente.addEventListener('click', () => {
-    // Avanzamos al siguiente índice
     tarjetaActivaIndex++;
-    
-    // Si llegamos al final del bloque, lanzamos la notificación moderna y reiniciamos
     if (tarjetaActivaIndex >= tarjetasActuales.length) {
-        lanzarNotificacionVerde();
-        mezclarTarjetas(tarjetasActuales);
+        const noti = document.createElement('div');
+        noti.className = 'notificacion-verde';
+        noti.textContent = "🎉 ¡Felicidades! Completaste este bloque de estudio.";
+        contenedorNotificacion.appendChild(noti);
+        setTimeout(() => { noti.remove(); }, 3000);
         tarjetaActivaIndex = 0;
     }
-    
     mostrarTarjeta();
+});
+
+// --- LOGICA DE NAVEGACIÓN ENTRE PANTALLAS ---
+const vistaFlashcards = document.getElementById('vista-flashcards');
+const vistaConceptos = document.getElementById('vista-conceptos');
+const btnMenuConceptos = document.getElementById('btn-menu-conceptos');
+const btnVolverFlashcards = document.getElementById('btn-volver-flashcards');
+
+btnMenuConceptos.addEventListener('click', () => {
+    vistaFlashcards.classList.add('vista-oculta');
+    vistaFlashcards.classList.remove('vista-activa');
+    vistaConceptos.classList.remove('vista-oculta');
+});
+
+btnVolverFlashcards.addEventListener('click', () => {
+    vistaConceptos.classList.add('vista-oculta');
+    vistaFlashcards.classList.remove('vista-oculta');
+    vistaFlashcards.classList.add('vista-activa');
+});
+
+// Manejo de Temas Principales (Licencias, Riesgos, Neumáticos)
+const botonesTemas = document.querySelectorAll('.btn-tema');
+
+botonesTemas.forEach(boton => {
+    boton.addEventListener('click', () => {
+        const temaSeleccionado = boton.getAttribute('data-tema');
+        
+        // Ocultar todos los temas principales
+        document.querySelectorAll('#detalle-temas-contenedor > div').forEach(bloque => {
+            bloque.className = 'bloque-contenido-tema-oculto';
+        });
+        
+        // Ocultar cualquier detalle interno abierto previamente
+        document.querySelectorAll('.contenedor-detalles > div').forEach(detalle => {
+            detalle.className = 'detalle-oculto';
+        });
+        
+        // Activar el tema elegido
+        const bloqueActivo = document.getElementById(`tema-${temaSeleccionado}`);
+        if (bloqueActivo) {
+            bloqueActivo.className = 'bloque-contenido-tema-activo';
+        }
+    });
+});
+
+// Manejo Universal de Sub-Bloques de colores
+const botonesSubbloques = document.querySelectorAll('.bloque-btn');
+
+botonesSubbloques.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const subtemaDestino = btn.getAttribute('data-subtema');
+        
+        // Buscamos el contenedor de detalles específico de este bloque hermano
+        const contenedorPadre = btn.closest('.bloque-contenido-tema-activo').querySelector('.contenedor-detalles');
+        
+        // Ocultamos todos los detalles dentro de ese contenedor específico
+        contenedorPadre.querySelectorAll(':scope > div').forEach(detalle => {
+            detalle.className = 'detalle-oculto';
+        });
+        
+        // Mostramos el detalle correspondiente
+        const detalleActivo = document.getElementById(`subtema-${subtemaDestino}`);
+        if (detalleActivo) {
+            detalleActivo.className = 'detalle-activo';
+        }
+    });
 });

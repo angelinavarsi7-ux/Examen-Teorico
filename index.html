@@ -8,37 +8,273 @@
 </head>
 <body>
 
-    <header>
-        <h1>Repaso con Flashcards</h1>
-        <p>Selecciona un bloque para comenzar:</p>
-        
-        <select id="selector-bloque">
-            <option value="">-- Elige un bloque --</option>
-            <option value="bloque1">Bloque 1: Fundamentos</option>
-            <option value="bloque2">Bloque 2: Señalamiento vial</option>
-            <option value="bloque3">Bloque 3: Mecánica y Controles Básicos</option>
-            <option value="bloque4">Bloque 4: Conduccion y maniobras seguras en la carretera</option>
-            <option value="bloque5">Bloque 5: Factores de riesgo y prevencion</option>
-            <option value="bloque6">Bloque 6: Normas y consecuencias en la ley de transito</option>
-        </select>
-    </header>
+    <button id="btn-menu-conceptos" class="btn-superior-izq">📚 Conceptos para Repasar</button>
 
-    <main>
-        <div id="contenedor-flashcard">
-            <div class="flashcard" id="flashcard">
-                <div class="cara cara-frontal">
-                    <p id="texto-frontal">Selecciona un bloque arriba para empezar a estudiar.</p>
+    <div id="vista-flashcards" class="vista-activa">
+        <header>
+            <h1>Repaso con Flashcards</h1>
+            <p>Selecciona un bloque para comenzar:</p>
+            
+            <select id="selector-bloque">
+                <option value="">-- Elige un bloque --</option>
+                <option value="bloque1">Bloque 1: Fundamentos</option>
+                <option value="bloque2">Bloque 2: Señalamiento vial</option>
+                <option value="bloque3">Bloque 3: Mecánica y Controles Básicos</option>
+                <option value="bloque4">Bloque 4: Conduccion y maniobras seguras en la carretera</option>
+                <option value="bloque5">Bloque 5: Factores de riesgo y prevencion</option>
+                <option value="bloque6">Bloque 6: Normas y consecuencias en la ley de transito</option>
+            </select>
+        </header>
+
+        <main>
+            <div id="contenedor-flashcard">
+                <div class="flashcard" id="flashcard">
+                    <div class="cara cara-frontal">
+                        <p id="texto-frontal">Selecciona un bloque arriba para empezar a estudiar.</p>
+                    </div>
+                    <div class="cara cara-trasera">
+                        <p id="texto-trasero">Concepto</p>
+                    </div>
                 </div>
-                <div class="cara cara-trasera">
-                    <p id="texto-trasero">Concepto</p>
+            </div>
+
+            <button id="btn-siguiente" style="display: none;">Siguiente Tarjeta</button>
+            <div id="contenedor-notificacion"></div>
+        </main>
+    </div>
+
+    <div id="vista-conceptos" class="vista-oculta">
+        <header>
+            <button id="btn-volver-flashcards" class="btn-flecha-volver">⬅ Volver a las Flashcards</button>
+            <h2>Temas de Repaso Teórico</h2>
+            <p id="texto-instruccion-conceptos">Selecciona una categoría para estudiar los conceptos clave:</p>
+        </header>
+
+        <div style="width: 100%; max-width: 600px; text-align: left; margin: 0 auto;">
+            <button id="btn-regresar-nivel" class="btn-regresar-nivel oculto">⬅ Volver al Menú Anterior</button>
+        </div>
+
+        <div class="menu-temas-grid">
+            <button class="btn-tema" data-tema="licencias">🪪 Tipos de Licencia</button>
+            <button class="btn-tema" data-tema="riesgos">⚠️ Factores de Riesgo</button>
+            <button class="btn-tema" data-tema="neumaticos">🛞 Neumáticos</button>
+        </div>
+
+       <div id="detalle-temas-contenedor">
+            
+    <div id="tema-licencias" class="bloque-contenido-tema-oculto">
+        <div class="contenedor-bloques-grid">
+            <button class="bloque-btn color-coral" data-subtema="licencia-a">Licencia Tipo A<br><small>(Motocicletas)</small></button>
+            <button class="bloque-btn color-turquesa" data-subtema="licencia-b">Licencia Tipo B<br><small>(Automóviles)</small></button>
+            <button class="bloque-btn color-morado" data-subtema="licencia-c">Licencia Tipo C<br><small>(Servicio Público)</small></button>
+            <button class="bloque-btn color-petroleo" data-subtema="licencia-d">Licencia Tipo D<br><small>(Equipo especial)</small></button>
+            <button class="bloque-btn color-oro" data-subtema="licencia-e">Licencia Tipo E<br><small>(Vehiculos de varios ejes)</small></button>
+        </div>
+
+        <div id="detalle-subtemas-licencias" class="contenedor-detalles">
+            
+            <div id="subtema-licencia-a" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia A</h3>
+                    <p><strong>Definición:</strong> Corresponde a motos, bicimotos, cuadraciclos o triciclos.</p>
+                    <img src="Licencia A.png" alt="Licencia A" class="img-concepto">
                 </div>
+            </div>
+
+            <div id="subtema-licencia-b" class="detalle-oculto">
+                <h4 style="text-align: center; margin-bottom: 15px; color: #2c3e50;">Categorías de Licencia Tipo B</h4>
+                
+                <div class="contenedor-bloques-grid">
+                    <button class="bloque-btn color-rosa" data-subtema="licencia-b1">Licencia B1</button>
+                    <button class="bloque-btn color-violeta" data-subtema="licencia-b2">Licencia B2</button>
+                    <button class="bloque-btn color-naranja" data-subtema="licencia-b3">Licencia B3</button>
+                    <button class="bloque-btn color-lima" data-subtema="licencia-b4">Licencia B4</button>
+                </div>
+            </div>
+
+            <div id="subtema-licencia-b1" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia B1</h3>
+                    <p><strong>Definición:</strong>Autoriza a conducir vehiculos de hasta 4000kg de peso bruto y su cilindraje no es mas de 550 centimetros cubicos.</p>
+                    <img src="Licencia B.png" alt="Licencia B1" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-b2" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia B2</h3>
+                    <p><strong>Definición:</strong>Se debe ser mayor de 20 años y autoriza a conducir vehiculos de hasta 8000kg de peso bruto y anteriormente haber tenido una licencia B o C con al menos 2 años de haberla expedido. </p>
+                    <img src="Licencia B.png" alt="Licencia B2" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-b3" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia B3</h3>
+                    <p><strong>Definición:</strong>Se debe ser mayor a 22 años, autoriza a conducir vehiculos pesados EXCEPTO los articulados, debe contar con una licencia B o C con al menos 3 años de haber sido expedida.</p>
+                    <img src="Licencia B.png" alt="Licencia B3" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-b4" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia B4</h3>
+                    <p><strong>Definición:</strong>Su unica diferencia a comparacion de la B3 es que esta si permite conducir vehiculos articulados, y para obetenrla hay que aprobar un curso espacial de COSEVI</p>
+                    <img src="Licencia B.png" alt="Licencia B4" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-c" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia C</h3>
+                    <p><strong>Definición:</strong> Corresponde a sistemas de transporte, es decir, buses, microbuses, taxis, busetas.</p>
+                    <img src="licencia c.png" alt="Licencia C" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-d" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia D</h3>
+                    <p><strong>Definición:</strong> Corresponde a tractor de llantas u oruga y otros tipos de equipos especiales.</p>
+                    <img src="licencia d.png" alt="Licencia D" class="img-concepto">
+                </div>
+            </div>
+
+            <div id="subtema-licencia-e" class="detalle-oculto">
+                <div class="tarjeta-concepto-visual">
+                    <h3>Licencia E</h3>
+                    <p><strong>Definición:</strong> Corresponde a vehículos con dos, tres o más ejes excepto los destinados a transporte público.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+            <div id="tema-riesgos" class="bloque-contenido-tema-oculto">
+                <div class="contenedor-bloques-grid">
+                    <button class="bloque-btn color-rosa" data-subtema="riesgo-velocidad">Posibilidad de que ocurra un accidente<br></button>
+                    <button class="bloque-btn color-esmeralda" data-subtema="riesgo-alcohol">Exposicion al riesgo<br></button>
+                    <button class="bloque-btn color-naranja" data-subtema="riesgo-distraccion">Gravedad de lesiones<br></button>
+                     <button class="bloque-btn color-azul" data-subtema="riesgo-atencion">Evaluacion de lesiones despues del accidente<br></button>
+                    
+                </div>
+
+
+                <div id="detalle-subtemas-riesgos" class="contenedor-detalles">
+                    <div id="subtema-riesgo-velocidad" class="detalle-oculto">
+                        <div class="tarjeta-concepto-visual">
+                            <h3>Posibilidad de que ocurra un accidente</h3>
+                            <p><strong>Definición:</strong> Se refiere a una mala condicion de vias y del vehiculo, consumo de alcohol y drogas, exceso de velocidad o distracciones. Todo lo que puede provocar un accidente.</p>
+                            <img src="Posibilidad Accidente.png" alt="Posibilidad accidente" class="img-concepto">
+                        </div>
+                    </div>
+                    <div id="subtema-riesgo-alcohol" class="detalle-oculto">
+                        <div class="tarjeta-concepto-visual">
+                            <h3>Posibilidad de que ocurra un accidente</h3>
+                            <p><strong>Definición:</strong> Se refiere a una calle sin tipo de vias, falta de aceras, tipo de vehiculo, volumen de transito o distancia de translado.</p>
+                            <img src="posibilidad.png" alt="Posibilidad de accidente" class="img-concepto">
+                        </div>
+                    </div>
+                    <div id="subtema-riesgo-distraccion" class="detalle-oculto">
+                        <div class="tarjeta-concepto-visual">
+                            <h3>Gravedad de lesiones</h3>
+                            <p><strong>Definición:</strong> No utilizar sistemas de seguridad, como cascos, cinturon o sistema de retencion infantil.</p>
+                            <img src="gravedadlesiones.png" alt="Gravedad de lesiones" class="img-concepto">
+                        </div>
+                    </div>
+                     <div id="subtema-riesgo-atencion" class="detalle-oculto">
+                        <div class="tarjeta-concepto-visual">
+                            <h3>Evaluacion de lesiones despues del accidente</h3>
+                            <p><strong>Definición:</strong> Se refiere a retraso en la deteccion y atencion del accidente, falta de servicios de emergencia y el translado al hospital</p>
+                            <img src="atencionaccidente.png" alt="Atencion post accidente" class="img-concepto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tema-neumaticos" class="bloque-contenido-tema-oculto">
+    <div class="contenedor-bloques-grid">
+        <button class="bloque-btn color-azul" data-subtema="neu-presion">Nomenclatura de las llantas<br></button>
+        <button class="bloque-btn color-menta" data-subtema="menu-tipos-llantas">Tipos de Llantas<br></button>
+        <button class="bloque-btn color-amarillo" data-subtema="menu-tipos-huellas-llantas">Tipos de huellas en las llantas<br></button>
+    </div>
+
+    <div id="detalle-subtemas-neumaticos" class="contenedor-detalles">
+        
+        <div id="subtema-neu-presion" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Nomenclatura</h3>
+                <p><strong>Definición:</strong> </p>
+                <p>195= Representa el ancho en mm del neumatico.</p>
+                <p>55= Porcentaje del flanco al ancho nominal.</p>
+                <p>R= Tipo de construccion ya sea radial o convencional.</p>
+                <p>16= Diametro interior del neumatico en pulgadas.</p> 
+                <p>87 = Indice de carga.</p>
+                <p>V = Velocidad maxima.</p>
+                <img src="nomenclatura.png" alt="Nomenclatura" class="img-concepto">
             </div>
         </div>
 
-        <button id="btn-siguiente" style="display: none;">Siguiente Tarjeta</button>
+        <div id="subtema-menu-tipos-llantas" class="detalle-oculto">
+            <div class="contenedor-bloques-grid" style="margin-top: 15px;">
+                <button class="bloque-btn color-rosa" data-subtema="llanta-radial">Llantas Radiales</button>
+                <button class="bloque-btn color-violeta" data-subtema="llanta-convencional">Llantas Convencionales</button>
+            </div>
+        </div>
 
-        <div id="contenedor-notificacion"></div>
-    </main>
+        <div id="subtema-llanta-radial" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas Radiales</h3>
+                <p><strong>Definición:</strong> Las capas de cable estas acomodadas de forma paralela, son resistentes a deformidades y altas temperaturas por velocidad.</p>
+            </div>
+        </div>
+
+        <div id="subtema-llanta-convencional" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas Convencionales</h3>
+                <p><strong>Definición:</strong> Estructura diagonal para mayor amortiguacion en terrenos irregulares, son ideales para vehiculos de carga ya que soportan altas presiones pero tienen menor durabilidad en comparacion a las radiales.</p>
+            </div>
+        </div>
+
+        
+        
+        <div id="subtema-menu-tipos-huellas-llantas" class="detalle-oculto">
+            <div class="contenedor-bloques-grid" style="margin-top: 15px;">
+                <button class="bloque-btn color-rosa" data-subtema="llanta-AT">Llantas AT</button>
+                <button class="bloque-btn color-violeta" data-subtema="llanta-MT">Llantas MT</button>
+
+                <button class="bloque-btn color-menta" data-subtema="llanta-HT">Llantas HT</button>
+                <button class="bloque-btn color-naranja" data-subtema="llanta-NIEVE">Llantas para nieve</button>
+            </div>
+        </div>
+
+        <div id="subtema-llanta-AT" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas AT</h3>
+                <p><strong>Definición:</strong> Tambien conocidad como llantas doble proposito, tienen buen desempeño para terreno pavimentado y sin pavimentar.</p>
+            </div>
+        </div>
+
+        <div id="subtema-llanta-MT" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas MT</h3>
+                <p><strong>Definición:</strong> Tiene una estructura robusta para terrenos dificiles, buen desempeño en terreno con barro y tierra y menor desempeño en carreteras.</p>
+            </div>
+        </div>
+
+        <div id="subtema-llanta-HT" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas HT</h3>
+                <p><strong>Definición:</strong> Es comun verlas en vehiculos que corren largas distancias en carreteras y estan diseñadas para terrenos pavimentados.</p>
+            </div>
+        </div>
+
+        <div id="subtema-llanta-NIEVE" class="detalle-oculto">
+            <div class="tarjeta-concepto-visual">
+                <h3>Llantas para nieve y lodo (M+S)</h3>
+                <p><strong>Definición:</strong> Estan diseñadas para zonas con nieve.</p>
+            </div>
+        </div>
 
     <script src="script.js"></script>
 </body>
